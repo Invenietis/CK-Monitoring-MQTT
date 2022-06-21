@@ -1,12 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="CK.Monitoring" Version="15.0.0-r08-00-0018-develop" />
-		<PackageReference Include="CK.MQTT.Client" Version="0.11.4--0001-develop" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CK.Monitoring" Version="15.0.0" />
+    <PackageReference Include="CK.MQTT.Client" Version="0.12.0" />
+  </ItemGroup>
 </Project>
