@@ -1,7 +1,7 @@
-﻿
+
 version: build{build}
 image: Visual Studio 2022
-clone_folder: C:\CKli-World\CK-Core-Projects\CK-Monitoring-MQTT
+clone_folder: C:\CKli-World\IoT\CK-Monitoring-MQTT
 branches:
   only:
     - master
