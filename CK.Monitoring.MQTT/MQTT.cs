@@ -6,7 +6,7 @@ using Microsoft.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CK.Monitoring.Handlers.MQTT
+namespace CK.Monitoring.Handlers
 {
     public sealed class MQTT : BaseLogSender<MQTTConfiguration>
     {

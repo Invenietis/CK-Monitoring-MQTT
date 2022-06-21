@@ -1,12 +1,6 @@
-using CK.Monitoring.Handlers;
 using CK.MQTT;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CK.Monitoring.Handlers.MQTT
+namespace CK.Monitoring.Handlers
 {
     public class MQTTConfiguration : IBaseLogSenderConfiguration
     {
