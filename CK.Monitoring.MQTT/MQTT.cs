@@ -12,13 +12,13 @@ namespace CK.Monitoring.Handlers
     {
         class MQTTSender : ISender
         {
-            readonly MqttClientAgent _client;
+            readonly MQTTClientAgent _client;
             bool _connected = true;
             public bool IsActuallyConnected => _client.IsConnected;
             public QualityOfService QoS { get; set; }
 
 
-            public MQTTSender( MqttClientAgent client, QualityOfService qos )
+            public MQTTSender( MQTTClientAgent client, QualityOfService qos )
             {
                 _client = client;
                 QoS = qos;
@@ -52,7 +52,7 @@ namespace CK.Monitoring.Handlers
             }
         }
 
-        MqttClientAgent _client = null!;
+        MQTTClientAgent _client = null!;
         public MQTT( MQTTConfiguration config ) : base( config )
         {
         }
@@ -61,14 +61,14 @@ namespace CK.Monitoring.Handlers
         {
             var splitted = Configuration.ConnectionString.Split( ':' );
             var channel = new TcpChannel( splitted[0], int.Parse( splitted[1] ) );
-            var config = new Mqtt3ClientConfiguration()
+            var config = new MQTT3ClientConfiguration()
             {
                 KeepAliveSeconds = 0,
                 DisconnectBehavior = DisconnectBehavior.AutoReconnect,
-                Credentials = new MqttClientCredentials( "ck-log-" + CoreApplicationIdentity.InstanceId, true ),
+                Credentials = new MQTTClientCredentials( "ck-log-" + CoreApplicationIdentity.InstanceId, true ),
                 ManualConnectBehavior = Configuration.FirstConnectBehavior
             };
-            _client = new MqttClientAgent( ( s ) => new LowLevelMqttClient( ProtocolConfiguration.Mqtt3, config, s, channel ) );
+            _client = new MQTTClientAgent( ( s ) => new LowLevelMQTTClient( ProtocolConfiguration.MQTT3, config, s, channel ) );
             var res = await _client.ConnectAsync( null );
             if( res.Status != ConnectStatus.Successful && res.Status != ConnectStatus.Deffered )
             {
