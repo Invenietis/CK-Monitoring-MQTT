@@ -3,6 +3,7 @@ using CK.MQTT;
 using CK.MQTT.Client;
 using CK.MQTT.LowLevelClient.PublishPackets;
 using Microsoft.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +13,13 @@ namespace CK.Monitoring.Handlers
     {
         class MQTTSender : ISender
         {
-            readonly MQTTClientAgent _client;
+            readonly IMQTT3Client _client;
             bool _connected = true;
             public bool IsActuallyConnected => _client.IsConnected;
             public QualityOfService QoS { get; set; }
 
 
-            public MQTTSender( MQTTClientAgent client, QualityOfService qos )
+            public MQTTSender( IMQTT3Client client, QualityOfService qos )
             {
                 _client = client;
                 QoS = qos;
@@ -47,30 +48,29 @@ namespace CK.Monitoring.Handlers
 
             public async ValueTask DisposeAsync()
             {
-                await _client.DisconnectAsync( true, true );
+                await _client.DisconnectAsync( true );
                 await _client.DisposeAsync();
             }
         }
 
-        MQTTClientAgent _client = null!;
+        IMQTT3Client _client = null!;
         public MQTT( MQTTConfiguration config ) : base( config )
         {
         }
 
         public override async ValueTask<bool> ActivateAsync( IActivityMonitor monitor )
         {
-            var splitted = Configuration.ConnectionString.Split( ':' );
-            var channel = new TcpChannel( splitted[0], int.Parse( splitted[1] ) );
-            var config = new MQTT3ClientConfiguration()
-            {
-                KeepAliveSeconds = 0,
-                DisconnectBehavior = DisconnectBehavior.AutoReconnect,
-                Credentials = new MQTTClientCredentials( "ck-log-" + CoreApplicationIdentity.InstanceId, true ),
-                ManualConnectBehavior = Configuration.FirstConnectBehavior
-            };
-            _client = new MQTTClientAgent( ( s ) => new LowLevelMQTTClient( ProtocolConfiguration.MQTT3, config, s, channel ) );
+            _client = MQTTClient.Factory.WithConfig(
+                 new MQTT3ClientConfiguration()
+                 {
+                     KeepAliveSeconds = 0,
+                     ClientId = "ck-log-" + CoreApplicationIdentity.InstanceId,
+                     ConnectionString = Configuration.ConnectionString
+                 } )
+                .WithAutoReconnect()
+                .Build();
             var res = await _client.ConnectAsync( null );
-            if( res.Status != ConnectStatus.Successful && res.Status != ConnectStatus.Deffered )
+            if( res.Status != ConnectStatus.Successful )
             {
                 monitor.Error( $"Unrecoverable error while connecting :{res}" );
             }
