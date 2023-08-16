@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CK.Monitoring" Version="18.0.3--0030-develop" />
-    <PackageReference Include="CK.MQTT.Client" Version="0.18.1--0052-develop" />
+    <PackageReference Include="CK.MQTT.Client" Version="0.18.1--0053-develop" />
   </ItemGroup>
 </Project>
