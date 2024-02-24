@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.Monitoring" Version="20.0.1--0003-develop" />
-    <PackageReference Include="CK.MQTT.Client" Version="0.23.1--0002-develop" />
+    <PackageReference Include="CK.Monitoring" Version="20.0.1--0004-develop" />
+    <PackageReference Include="CK.MQTT.Client" Version="0.23.1--0003-develop" />
   </ItemGroup>
 </Project>
