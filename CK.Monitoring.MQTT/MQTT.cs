@@ -26,7 +26,7 @@ namespace CK.Monitoring.Handlers
             }
 
             static readonly Encoding _encoding = new UTF8Encoding();
-            public async ValueTask<bool> TrySendAsync( IActivityMonitor monitor, IMulticastLogEntry logEvent )
+            public async ValueTask<bool> TrySendAsync( IActivityMonitor monitor, IFullLogEntry logEvent )
             {
                 var mem = (RecyclableMemoryStream)Util.RecyclableStreamManager.GetStream( "CK.Monitoring.MQTT" );
                 CKBinaryWriter bw = new( mem, _encoding, false );
