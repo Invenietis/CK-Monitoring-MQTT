@@ -3,7 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.Monitoring" Version="21.0.1--0004-develop" />
-    <PackageReference Include="CK.MQTT.Client" Version="0.24.2--0001-develop" />
+    <PackageReference Include="CK.Monitoring" Version="21.0.1" />
+    <PackageReference Include="CK.MQTT.Client" Version="0.24.2" />
   </ItemGroup>
 </Project>
